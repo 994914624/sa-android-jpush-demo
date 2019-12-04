@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.sensorsdata.android.push">
+
+    <uses-permission android:name="com.coloros.mcs.permission.RECIEVE_MCS_MESSAGE"/>
+    <uses-permission android:name="com.heytap.mcs.permission.RECIEVE_MCS_MESSAGE"/>
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".OpenClickActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Since JCore2.0.0 Required SDK核心功能 -->
+        <!-- 可配置android:process参数将Service放在其他进程中；android:enabled属性不能是false -->
+        <!-- 这个是自定义Service，要继承极光JCommonService，可以在更多手机平台上使得推送通道保持的更稳定 -->
+        <service
+            android:name=".MyJCommonService"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":pushcore">
+            <intent-filter>
+                <action android:name="cn.jiguang.user.service.action" />
+            </intent-filter>
+        </service>
+
+        <receiver android:name=".MyJPushMessageReceiver"/>
+
+        <service
+            android:name="com.heytap.mcssdk.PushService"     android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE">
+            <intent-filter>
+                <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.heytap.mcssdk.AppPushService"     android:permission="com.heytap.mcs.permission.SEND_MCS_MESSAGE">
+            <intent-filter>
+                <action android:name="com.heytap.mcs.action.RECEIVE_MCS_MESSAGE"/>
+            </intent-filter>
+        </service>
+
+    </application>
+
+</manifest>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">jpush-vip</string>
+    <string name="notification_channel_name">通道001</string>
+</resources>

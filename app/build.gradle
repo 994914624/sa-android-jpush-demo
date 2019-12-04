@@ -1,0 +1,85 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+    defaultConfig {
+        applicationId "com.sensorsdata.android.push"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "a364d9279fbb5f9fc81554a1", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+
+                XIAOMI_APPKEY:"MI-5181809853384",//小米平台注册的appkey
+                XIAOMI_APPID:"MI-2882303761518098384",//小米平台注册的appid
+
+                HUAWEI_APPID:"100994021",//华为
+
+                MEIZU_APPKEY:"MZ-373ebb77df37432babadc35f5d41ecb9",//魅族平台注册的appkey
+                MEIZU_APPID:"MZ-126314",//魅族平台注册的appid
+
+
+                OPPO_APPKEY : "OP-f0112b72c1cb4a88b563601d2668623e", // OPPO平台注册的appkey
+                OPPO_APPID : "OP-30161694", // OPPO平台注册的appid
+                OPPO_APPSECRET: "OP-a93031e4428a4b23a1c106ed0b293ac5",//OPPO平台注册的appsecret
+        ]
+    }
+
+    signingConfigs {
+        config {
+            keyAlias 'yang'
+            keyPassword '123456'
+            storeFile file('../sign.key')
+            storePassword '123456'
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.config
+        }
+        release {
+            signingConfig signingConfigs.config
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    // jpush
+    implementation 'cn.jiguang.sdk:jpush:3.4.1'  // 此处以JPush 3.4.1 版本为例。
+    implementation 'cn.jiguang.sdk:jcore:2.2.4'  // 此处以JCore 2.2.4 版本为例。
+    // 小米通道
+    implementation 'cn.jiguang.sdk.plugin:xiaomi:3.4.1'
+    // 华为通道
+    implementation'cn.jiguang.sdk.plugin:huawei:3.4.1'
+    // 魅族通道
+    implementation'cn.jiguang.sdk.plugin:meizu:3.4.1'
+    // OPPO
+    implementation'cn.jiguang.sdk.plugin:oppo:3.4.1'
+
+
+
+
+    //implementation 'com.meizu.flyme.internet:push-internal:3.8.6'
+}
