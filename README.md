@@ -2,11 +2,10 @@
 
 ## License
 
-<p id ='copyright'>Copyright 2015－2020.</p>
-
+<p class ="copyright">Copyright 2015－2020 Sensors Data Inc.</p>
 <script>
 function updateCopyright(){
-    document.getElementById("copyright").innerHTML= 'Copyright 2015－'+new Date().getUTCFullYear()+'.'
+    document.getElementsByClassName("copyright")[0].innerHTML= 'Copyright 2015－'+new Date().getUTCFullYear()+' Sensors Data Inc.'
 }
 if ( window.addEventListener ) {
     window.addEventListener("load", function(){updateCopyright();}, false)
@@ -16,4 +15,3 @@ if ( window.addEventListener ) {
     window.onload = function(){updateCopyright();}
 }
 </script>
-
